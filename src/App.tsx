@@ -1,12 +1,20 @@
+import SongList from './components/SongList';
+
 function App() {
   return (
     <>
       <header>
-        <h1>
-          <a href="/">Amba Strings Song List</a>
-        </h1>
+        <nav>
+          <ul>
+            <li>
+              <h1>Amba Strings Song List</h1>
+            </li>
+          </ul>
+        </nav>
       </header>
-      <main></main>
+      <main>
+        <SongList />
+      </main>
     </>
   );
 }
