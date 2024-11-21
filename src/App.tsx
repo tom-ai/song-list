@@ -13,8 +13,19 @@ function App() {
         </nav>
       </header>
       <main>
-        <SongList />
+        <section>
+          <SongList />
+        </section>
       </main>
+      <footer>
+        <nav>
+          <ul>
+            <li>
+              Follow <a href="http://instagram.com/ambastrings">@ambastrings</a>
+            </li>
+          </ul>
+        </nav>
+      </footer>
     </>
   );
 }
