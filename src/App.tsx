@@ -7,7 +7,7 @@ function App() {
         <nav>
           <ul>
             <li>
-              <h1>Amba Strings Song List</h1>
+              <h1>Amba Strings' Song List</h1>
             </li>
           </ul>
         </nav>
