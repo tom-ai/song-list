@@ -1,9 +1,6 @@
 import { Song } from '../types/Song';
-import songList from '../data/songs.json';
 
-export default function SongList() {
-  const songs: Song[] = songList;
-
+export default function SongList({ songs }: { songs: Song[] }) {
   return (
     <>
       <table className="striped">
