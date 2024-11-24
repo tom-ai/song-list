@@ -2,15 +2,17 @@ import SongList from './components/SongList';
 import { Song } from './types/Song';
 import songList from './data/songs.json';
 import { Link, useSearchParams } from 'react-router';
+import { useCallback, useState } from 'react';
 import debounce from 'lodash/debounce';
 
 function App() {
   const [params, setParams] = useSearchParams({});
+  const [inputValue, setInputValue] = useState(params.get('q') ?? '');
 
   const q = params.get('q') ?? '';
 
   function filterSongs(song: Song) {
-    const searchQ = q.toLowerCase();
+    const searchQ = inputValue.toLowerCase();
 
     const { songName, artist } = song;
     return (
@@ -18,6 +20,17 @@ function App() {
       artist.toLowerCase().includes(searchQ)
     );
   }
+
+  const debouncedSetParams = useCallback(
+    debounce((value: string) => {
+      if (value === '') {
+        setParams({});
+      } else {
+        setParams({ q: value }, { replace: true });
+      }
+    }, 1000),
+    [setParams]
+  );
 
   const songs: Song[] = songList.filter((song) => filterSongs(song));
 
@@ -41,15 +54,11 @@ function App() {
             name="search"
             placeholder="Search repertoire"
             aria-label="Search"
-            value={q}
+            value={inputValue}
             onChange={(e) => {
               const value = e.target.value;
-
-              if (value === '') {
-                setParams({});
-              } else {
-                setParams({ q: value }, { replace: true });
-              }
+              setInputValue(value);
+              debouncedSetParams(value);
             }}
           />
           <SongList songs={songs} />
