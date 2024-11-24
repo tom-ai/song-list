@@ -61,7 +61,11 @@ function App() {
               debouncedSetParams(value);
             }}
           />
-          <SongList songs={songs} />
+          {q !== '' && songs.length === 0 ? (
+            <p>No songs found matching "{inputValue}"</p>
+          ) : (
+            <SongList songs={songs} />
+          )}
         </section>
       </main>
       <footer>
