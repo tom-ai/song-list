@@ -12,7 +12,7 @@ function App() {
   const q = params.get('q') ?? '';
 
   function filterSongs(song: Song) {
-    const searchQ = inputValue.toLowerCase();
+    const searchQ = inputValue.toLowerCase().trim();
 
     const { songName, artist } = song;
     return (
