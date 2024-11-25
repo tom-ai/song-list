@@ -5,6 +5,7 @@ import { Link, useSearchParams } from 'react-router';
 import { useMemo, useState } from 'react';
 import debounce from 'lodash/debounce';
 import SearchBox from './components/SearchBox';
+import { filterSongs } from './utils/songhelpers';
 
 function App() {
   const [params, setParams] = useSearchParams({});
@@ -15,16 +16,6 @@ function App() {
   function handleChange(value: string) {
     setInputValue(value);
     debouncedSetParams(value);
-  }
-
-  function filterSongs(song: Song) {
-    const searchQ = inputValue.toLowerCase().trim();
-
-    const { songName, artist } = song;
-    return (
-      songName.toLowerCase().includes(searchQ) ||
-      artist.toLowerCase().includes(searchQ)
-    );
   }
 
   const debouncedSetParams = useMemo(
@@ -40,7 +31,9 @@ function App() {
     [setParams]
   );
 
-  const songs: Song[] = songList.filter((song) => filterSongs(song));
+  const songs: Song[] = songList.filter((song) =>
+    filterSongs(song, inputValue)
+  );
 
   return (
     <>
