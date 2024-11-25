@@ -1,7 +1,7 @@
 import SongList from './components/SongList';
 import { Song } from './types/Song';
 import songList from './data/songs.json';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { useState } from 'react';
 import SearchBox from './components/SearchBox';
 import { filterSongs } from './utils/songHelpers';
@@ -26,7 +26,7 @@ function App() {
           <ul>
             <li>
               <h1>
-                <Link to="/">Amba Strings - Song List</Link>
+                <a href="/">Amba Strings - Song List</a>
               </h1>
             </li>
           </ul>
