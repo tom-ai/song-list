@@ -2,14 +2,20 @@ import SongList from './components/SongList';
 import { Song } from './types/Song';
 import songList from './data/songs.json';
 import { Link, useSearchParams } from 'react-router';
-import { useCallback, useState } from 'react';
+import { useMemo, useState } from 'react';
 import debounce from 'lodash/debounce';
+import SearchBox from './components/SearchBox';
 
 function App() {
   const [params, setParams] = useSearchParams({});
   const [inputValue, setInputValue] = useState(params.get('q') ?? '');
 
   const q = params.get('q') ?? '';
+
+  function handleChange(value: string) {
+    setInputValue(value);
+    debouncedSetParams(value);
+  }
 
   function filterSongs(song: Song) {
     const searchQ = inputValue.toLowerCase().trim();
@@ -21,14 +27,16 @@ function App() {
     );
   }
 
-  const debouncedSetParams = useCallback(
-    debounce((value: string) => {
-      if (value === '') {
-        setParams({});
-      } else {
-        setParams({ q: value }, { replace: true });
-      }
-    }, 1000),
+  const debouncedSetParams = useMemo(
+    () =>
+      debounce((value: string) => {
+        if (value === '') {
+          setParams({});
+        } else {
+          console.log(value);
+          setParams({ q: value }, { replace: true });
+        }
+      }, 1000),
     [setParams]
   );
 
@@ -49,18 +57,7 @@ function App() {
       </header>
       <main>
         <section>
-          <input
-            type="search"
-            name="search"
-            placeholder="Search repertoire"
-            aria-label="Search"
-            value={inputValue}
-            onChange={(e) => {
-              const value = e.target.value;
-              setInputValue(value);
-              debouncedSetParams(value);
-            }}
-          />
+          <SearchBox value={inputValue} onChange={handleChange} />
           {q !== '' && songs.length === 0 ? (
             <p>No songs found matching "{inputValue}"</p>
           ) : (
