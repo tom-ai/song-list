@@ -2,10 +2,10 @@ import SongList from './components/SongList';
 import { Song } from './types/Song';
 import songList from './data/songs.json';
 import { Link, useSearchParams } from 'react-router';
-import { useMemo, useState } from 'react';
-import debounce from 'lodash/debounce';
+import { useState } from 'react';
 import SearchBox from './components/SearchBox';
-import { filterSongs } from './utils/songhelpers';
+import { filterSongs } from './utils/songHelpers';
+import { useDebouncedSetParams } from './hooks/useDebouncedSetParams';
 
 function App() {
   const [params, setParams] = useSearchParams({});
@@ -13,23 +13,7 @@ function App() {
 
   const q = params.get('q') ?? '';
 
-  function handleChange(value: string) {
-    setInputValue(value);
-    debouncedSetParams(value);
-  }
-
-  const debouncedSetParams = useMemo(
-    () =>
-      debounce((value: string) => {
-        if (value === '') {
-          setParams({});
-        } else {
-          console.log(value);
-          setParams({ q: value }, { replace: true });
-        }
-      }, 1000),
-    [setParams]
-  );
+  const debouncedSetParams = useDebouncedSetParams(setParams, 500);
 
   const songs: Song[] = songList.filter((song) =>
     filterSongs(song, inputValue)
@@ -50,7 +34,13 @@ function App() {
       </header>
       <main>
         <section>
-          <SearchBox value={inputValue} onChange={handleChange} />
+          <SearchBox
+            value={inputValue}
+            onChange={(value) => {
+              setInputValue(value);
+              debouncedSetParams(value);
+            }}
+          />
           {q !== '' && songs.length === 0 ? (
             <p>No songs found matching "{inputValue}"</p>
           ) : (
