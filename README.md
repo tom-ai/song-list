@@ -10,3 +10,8 @@ Styled with semantic HTML and basic classes using https://picocss.com
 
 ## Deployment
 Hosted and deployed on Vercel. Pushes to `main` branch trigger a build to production.
+
+## Tools
+Use NanoID instead of UUID
+https://evilmartians.com/opensource/nanoid
+
