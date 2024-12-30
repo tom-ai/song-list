@@ -1,52 +1,28 @@
-import SongList from './components/SongList';
-import { Song } from './types/Song';
-import songList from './data/songs.json';
-import { useSearchParams } from 'react-router';
-import { useState } from 'react';
-import SearchBox from './components/SearchBox';
-import { filterSongs } from './utils/songHelpers';
-import { useDebouncedSetParams } from './hooks/useDebouncedSetParams';
+import { NavLink, Outlet } from 'react-router';
 
 function App() {
-  const [params, setParams] = useSearchParams({});
-  const [inputValue, setInputValue] = useState(params.get('q') ?? '');
-
-  const q = params.get('q') ?? '';
-
-  const debouncedSetParams = useDebouncedSetParams(setParams, 500);
-
-  const songs: Song[] = songList.filter((song) =>
-    filterSongs(song, inputValue)
-  );
-
   return (
     <>
       <header>
+        <hgroup>
+          <h1>Amba Strings</h1>
+          <p>Add songs to a playlist and share!</p>
+        </hgroup>
         <nav>
           <ul>
             <li>
-              <h1>
-                <a href="/">Amba Strings - Song List</a>
-              </h1>
+              <NavLink to="/">Song List</NavLink>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <NavLink to="/playlist">My Playlist</NavLink>
             </li>
           </ul>
         </nav>
       </header>
       <main>
-        <section>
-          <SearchBox
-            value={inputValue}
-            onChange={(value) => {
-              setInputValue(value);
-              debouncedSetParams(value);
-            }}
-          />
-          {q !== '' && songs.length === 0 ? (
-            <p>No songs found matching "{inputValue}"</p>
-          ) : (
-            <SongList songs={songs} />
-          )}
-        </section>
+        <Outlet />
       </main>
       <footer>
         <nav>
