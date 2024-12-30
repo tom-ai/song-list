@@ -14,7 +14,7 @@ export default function SongList({ songs }: { songs: Song[] }) {
           {songs.map((song, i) => {
             return (
               <tr key={i}>
-                <th scope="row">{song.songName}</th>
+                <th scope="row">{song.title}</th>
                 <td>{song.artist}</td>
               </tr>
             );

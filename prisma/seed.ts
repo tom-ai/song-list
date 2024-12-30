@@ -2,15 +2,11 @@ import * as fs from 'fs';
 import { prisma } from '../src/data/prisma';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Song } from '../src/types/Song';
 
 async function main() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-
-  type Song = {
-    title: string;
-    artist: string;
-  };
 
   const songsData = JSON.parse(
     fs.readFileSync(path.resolve(__dirname, '../src/data/songs.json'), 'utf-8')

@@ -4,9 +4,9 @@ import { Song } from '../types/Song';
 
 describe('Filter Songs', () => {
   const testSongs: Song[] = [
-    { songName: 'Bohemian Rhapsody', artist: 'Queen' },
-    { songName: 'Stairway to Heaven', artist: 'Led Zeppelin' },
-    { songName: 'Hotel California', artist: 'Eagles' },
+    { title: 'Bohemian Rhapsody', artist: 'Queen' },
+    { title: 'Stairway to Heaven', artist: 'Led Zeppelin' },
+    { title: 'Hotel California', artist: 'Eagles' },
   ];
 
   test('filters by full song name', () => {
@@ -14,13 +14,13 @@ describe('Filter Songs', () => {
       filterSongs(song, 'Bohemian Rhapsody')
     );
     expect(result).toHaveLength(1);
-    expect(result[0].songName).toBe('Bohemian Rhapsody');
+    expect(result[0].title).toBe('Bohemian Rhapsody');
   });
 
   test('filters by partial song name', () => {
     const result = testSongs.filter((song) => filterSongs(song, 'heaven'));
     expect(result).toHaveLength(1);
-    expect(result[0].songName).toBe('Stairway to Heaven');
+    expect(result[0].title).toBe('Stairway to Heaven');
   });
 
   test('filters by full artist name', () => {
