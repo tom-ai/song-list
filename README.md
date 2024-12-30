@@ -1,17 +1,14 @@
-# Amba Strings' Song List
-http://songs.ambastrings.co.uk
+# Song List
 
-A dynamic song list for Amba Strings. Made with Vite and PicoCSS.
+Currently live for Amba Strings at http://songs.ambastrings.co.uk
 
-Clone project, run `run npm dev` to run
+A dynamic song list and playlist generator. Add songs to a playlist and easily share it with a link. Made with Vite.
+
+Clone project, add environment variables to a `.env` file and run `run npm dev`.
 
 ## Styling
 Styled with semantic HTML and basic classes using https://picocss.com
 
 ## Deployment
 Hosted and deployed on Vercel. Pushes to `main` branch trigger a build to production.
-
-## Tools
-Use NanoID instead of UUID
-https://evilmartians.com/opensource/nanoid
 
