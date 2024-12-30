@@ -13,3 +13,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Playlist {
+  id           String         @id @default(uuid())
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt()
+  PlaylistSong PlaylistSong[]
+}
+
+model Song {
+  id        Int            @id @default(autoincrement())
+  title     String
+  artist    String
+  playlists PlaylistSong[]
+
+  @@unique([artist, title])
+}
+
+model PlaylistSong {
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String
+  song       Song     @relation(fields: [songId], references: [id])
+  songId     Int
+  addedAt    DateTime @default(now())
+
+  @@id([playlistId, songId])
+}
