@@ -1,12 +1,27 @@
 import { expect, test, describe } from 'vitest';
 import { filterSongs } from './songHelpers';
-import { Song } from '../types/Song';
+import { Song } from '../types';
 
 describe('Filter Songs', () => {
   const testSongs: Song[] = [
-    { title: 'Bohemian Rhapsody', artist: 'Queen' },
-    { title: 'Stairway to Heaven', artist: 'Led Zeppelin' },
-    { title: 'Hotel California', artist: 'Eagles' },
+    {
+      title: 'Bohemian Rhapsody',
+      artist: 'Queen',
+      created_at: '2025-01-09T15:00:00Z',
+      id: 1,
+    },
+    {
+      title: 'Stairway to Heaven',
+      artist: 'Led Zeppelin',
+      created_at: '2025-01-09T15:00:00Z',
+      id: 2,
+    },
+    {
+      title: 'Hotel California',
+      artist: 'Eagles',
+      created_at: '2025-01-09T15:00:00Z',
+      id: 3,
+    },
   ];
 
   test('filters by full song name', () => {

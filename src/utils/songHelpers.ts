@@ -1,4 +1,4 @@
-import { Song } from '../types/Song';
+import { Song } from '../types';
 
 export function filterSongs(song: Song, query: string) {
   const searchQ = query.toLowerCase().trim();
