@@ -1,10 +1,8 @@
 import SongList from '../components/SongList';
-import { useOutletContext, useSearchParams } from 'react-router';
-import { useState } from 'react';
+import { useOutletContext } from 'react-router';
 import SearchBox from '../components/SearchBox';
-import { filterSongs } from '../utils/songHelpers';
-import { useDebouncedSetParams } from '../hooks/useDebouncedSetParams';
-import { Song } from './../types';
+import { Song } from '../types';
+import { useSearch } from '../hooks/useSearch';
 
 interface AppContext {
   songs: Song[];
@@ -13,33 +11,19 @@ interface AppContext {
 }
 
 export default function MainPage() {
-  const [params, setParams] = useSearchParams({});
-
-  const [inputValue, setInputValue] = useState(params.get('q') ?? '');
-
-  const q = params.get('q') ?? '';
-
-  const debouncedSetParams = useDebouncedSetParams(setParams, 500);
-
   const { songs, isLoading, error } = useOutletContext<AppContext>();
-
-  const filteredSongs = songs.filter((song) => filterSongs(song, inputValue));
+  const { inputValue, setInputValue, filteredSongs, searchQuery } =
+    useSearch(songs);
 
   return (
     <section>
-      <SearchBox
-        value={inputValue}
-        onChange={(value) => {
-          setInputValue(value);
-          debouncedSetParams(value);
-        }}
-      />
+      <SearchBox value={inputValue} onChange={setInputValue} />
       {isLoading ? (
         <p>Loading songs...</p>
       ) : error ? (
         <p>Error: {error}</p>
-      ) : q !== '' && filteredSongs.length === 0 ? (
-        <p>No songs found matching "{inputValue}"</p>
+      ) : searchQuery !== '' && filteredSongs.length === 0 ? (
+        <p>No songs found matching "{searchQuery}"</p>
       ) : (
         <SongList songs={filteredSongs} />
       )}
