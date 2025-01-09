@@ -1,6 +1,9 @@
 import { NavLink, Outlet } from 'react-router';
+import useSongs from './hooks/useSongs';
 
 function App() {
+  const { songs, isLoading, error } = useSongs();
+
   return (
     <>
       <header>
@@ -22,7 +25,7 @@ function App() {
         </nav>
       </header>
       <main>
-        <Outlet />
+        <Outlet context={{ songs, isLoading, error }} />
       </main>
       <footer>
         <nav>

@@ -1,4 +1,4 @@
-import { Song } from '../types/Song';
+import { Song } from './../types';
 
 export default function SongList({ songs }: { songs: Song[] }) {
   return (
