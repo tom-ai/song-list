@@ -1,28 +1,35 @@
 import { NavLink, Outlet } from 'react-router';
 import useSongs from './hooks/useSongs';
+import featureFlags from './featureFlags.json';
 
 function App() {
   const { songs, isLoading, error } = useSongs();
 
   return (
     <>
-      <header>
+      <header style={{ paddingBlock: '1rem' }}>
         <hgroup>
           <h1>Amba Strings</h1>
-          <p>Add songs to a playlist and share!</p>
+          {featureFlags.hasPlaylist ? (
+            <p>Add songs to a playlist and share!</p>
+          ) : (
+            <p>Song List</p>
+          )}
         </hgroup>
-        <nav>
-          <ul>
-            <li>
-              <NavLink to="/">Song List</NavLink>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <NavLink to="/playlist">My Playlist</NavLink>
-            </li>
-          </ul>
-        </nav>
+        {featureFlags.hasPlaylist && (
+          <nav>
+            <ul>
+              <li>
+                <NavLink to="/">Song List</NavLink>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <NavLink to="/playlist">My Playlist</NavLink>
+              </li>
+            </ul>
+          </nav>
+        )}
       </header>
       <main>
         <Outlet context={{ songs, isLoading, error }} />
