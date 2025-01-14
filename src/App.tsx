@@ -3,7 +3,7 @@ import useSongs from './hooks/useSongs';
 import featureFlags from './featureFlags.json';
 
 function App() {
-  const { songs, isLoading, error } = useSongs();
+  const { songs, loading, error } = useSongs();
 
   return (
     <>
@@ -32,7 +32,7 @@ function App() {
         )}
       </header>
       <main>
-        <Outlet context={{ songs, isLoading, error }} />
+        <Outlet context={{ songs, loading, error }} />
       </main>
       <footer>
         <nav>
