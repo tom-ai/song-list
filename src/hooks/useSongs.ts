@@ -1,29 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Song } from './../types';
-import { supabase } from '.';
+import { getSongs } from '../api';
 
 export default function useSongs() {
   const [songs, setSongs] = useState<Song[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getSongs();
+    getSongs()
+      .then((data) => {
+        setSongs(data);
+      })
+      .catch((err) => {
+        console.warn(err);
+        setError(
+          err instanceof Error ? err.message : 'An unknown error occurred'
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  async function getSongs() {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const { data, error } = await supabase.from('Song').select();
-      if (error) throw error;
-      setSongs(data || []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  return { songs, isLoading, error };
+  return { songs, loading, error };
 }
