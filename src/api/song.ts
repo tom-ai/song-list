@@ -6,3 +6,7 @@ export async function getSongs(): Promise<Song[]> {
   if (error) throw new Error(`Failed to fetch songs - ${error.message}`);
   return data ?? [];
 }
+
+// export async function addSong() {
+//   const { data, error } =
+// }

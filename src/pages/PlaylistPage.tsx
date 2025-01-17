@@ -1,3 +1,13 @@
+import { useOutletContext } from 'react-router';
+import { AppContext } from '../App';
+
 export default function PlaylistPage() {
-  return <h1>Playlist</h1>;
+  const { playlistExists } = useOutletContext<AppContext>();
+
+  return (
+    <>
+      <h1>Playlist</h1>
+      {playlistExists && <p>Yes</p>}
+    </>
+  );
 }

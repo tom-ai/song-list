@@ -1,14 +1,8 @@
 import SongList from '../components/SongList';
 import { useOutletContext } from 'react-router';
 import SearchBox from '../components/SearchBox';
-import { Song } from '../types';
 import { useSearch } from '../hooks/useSearch';
-
-interface AppContext {
-  songs: Song[];
-  isLoading: boolean;
-  error: string | null;
-}
+import { AppContext } from '../App';
 
 export default function MainPage() {
   const { songs, isLoading, error } = useOutletContext<AppContext>();
@@ -17,6 +11,7 @@ export default function MainPage() {
 
   return (
     <section>
+      {}
       <SearchBox value={inputValue} onChange={setInputValue} />
       {isLoading ? (
         <p>Loading songs...</p>
