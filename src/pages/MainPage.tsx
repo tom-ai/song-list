@@ -5,7 +5,6 @@ import { useSearch } from '../hooks/useSearch';
 import { useEffect, useState } from 'react';
 import { getSongsByGenre } from '../api/helpers/databaseHelpers';
 import { SongWithGenres } from '../types';
-import { useSearchParams } from 'react-router';
 // import { AppContext } from '../App';
 
 export default function MainPage() {
