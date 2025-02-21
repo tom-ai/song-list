@@ -1,3 +1,7 @@
 export default function PlaylistPage() {
-  return <h1>Playlist</h1>;
+  return (
+    <>
+      <h1>Playlist</h1>
+    </>
+  );
 }

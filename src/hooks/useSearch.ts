@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 import { debounce } from 'lodash';
-import { Song } from '../types';
+import { SongWithGenres } from '../types';
 import { filterSongs } from '../utils/songHelpers';
 
-export function useSearch(songs: Song[], debounceDelay = 500) {
+export function useSearch(songs: SongWithGenres[], debounceDelay = 500) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('q') ?? '');
 

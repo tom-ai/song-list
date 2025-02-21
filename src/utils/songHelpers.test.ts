@@ -8,19 +8,19 @@ describe('Filter Songs', () => {
       title: 'Bohemian Rhapsody',
       artist: 'Queen',
       created_at: '2025-01-09T15:00:00Z',
-      id: 1,
+      song_id: 1,
     },
     {
       title: 'Stairway to Heaven',
       artist: 'Led Zeppelin',
       created_at: '2025-01-09T15:00:00Z',
-      id: 2,
+      song_id: 2,
     },
     {
       title: 'Hotel California',
       artist: 'Eagles',
       created_at: '2025-01-09T15:00:00Z',
-      id: 3,
+      song_id: 3,
     },
   ];
 
