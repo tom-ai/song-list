@@ -1,5 +1,5 @@
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
-import { Database } from '../types/supabase';
+import { Database } from '../types/database.types';
 
 export * from './song';
 
@@ -10,3 +10,4 @@ export const supabase: SupabaseClient<Database> = createClient(
   supabaseUrl,
   supabaseAnonKey
 );
+

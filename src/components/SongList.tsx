@@ -1,35 +1,46 @@
-import { useOutletContext } from 'react-router';
-import { Song } from './../types';
-import { AppContext } from '../App';
+import { SongWithGenres } from './../types';
 
-export default function SongList({ songs }: { songs: Song[] }) {
-  function handleClick(songId: number) {
-    console.log(songId);
-  }
+// import { addSong } from '../api';
 
-  const { playlistExists } = useOutletContext<AppContext>();
+export default function SongList({ songs }: { songs: SongWithGenres[] }) {
+  // function handleClick(songId: number) {
+  //   console.log(songId);
+  //   // addSong(songId);
+  // }
+
+  // const { playlistExists } = useOutletContext<AppContext>();
 
   return (
     <>
       <table id="table" className="striped">
         <thead>
           <tr>
-            {playlistExists && <th scope="col"></th>}
+            {/* {playlistExists && <th scope="col"></th>} */}
             <th scope="col">Song Name</th>
             <th scope="col">Artist</th>
+            <th scope="col">Genre(s)</th>
           </tr>
         </thead>
         <tbody>
           {songs.map((song, i) => {
             return (
               <tr key={i}>
-                {playlistExists && (
+                {/* {playlistExists && (
                   <th scope="row">
                     <button onClick={() => handleClick(song.id)}></button>
                   </th>
-                )}
+                )} */}
                 <th scope="row">{song.title}</th>
                 <td>{song.artist}</td>
+                <td>
+                  {song.genres.map((genre) => {
+                    return (
+                      <>
+                        <span>{genre.name}</span>
+                      </>
+                    );
+                  })}
+                </td>
               </tr>
             );
           })}
