@@ -1,5 +1,4 @@
 import SongList from '../components/SongList';
-
 import SearchBox from '../components/SearchBox';
 import { useSearch } from '../hooks/useSearch';
 import { useEffect, useState } from 'react';
@@ -7,34 +6,33 @@ import { getSongsByGenre } from '../api/helpers/databaseHelpers';
 import { SongWithGenres } from '../types';
 // import { AppContext } from '../App';
 
-export default function MainPage() {
-  // const { songs, isLoading, error } = useOutletContext<AppContext>();
-  // const { songs, isLoading, error } = useSongsWithGenres();
+const GENRES = ['Pop', 'Classical'] as const;
 
-  const [songs, setSongs] = useState<SongWithGenres[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function MainPage() {
+  const [state, setState] = useState({
+    songs: [] as SongWithGenres[],
+    loading: true,
+    error: null as string | null,
+  });
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
+    setState((prev) => ({ ...prev, loading: true }));
     getSongsByGenre(selectedGenre)
-      .then((data) => {
-        setSongs(data);
-      })
-      .catch((err) => {
-        console.warn(err);
-        setError(
-          err instanceof Error ? err.message : 'An unknown error occurred'
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .then((songs) => setState({ songs, loading: false, error: null }))
+      .catch((err) =>
+        setState({
+          songs: [],
+          loading: false,
+          error:
+            err instanceof Error ? err.message : 'An unknown error occurred',
+        })
+      );
   }, [selectedGenre]);
 
-  const { inputValue, setInputValue, filteredSongs, searchQuery } =
-    useSearch(songs);
+  const { inputValue, setInputValue, filteredSongs, searchQuery } = useSearch(
+    state.songs
+  );
 
   return (
     <section>
@@ -43,30 +41,26 @@ export default function MainPage() {
       <div role="group">
         <button
           className="secondary"
-          aria-current={selectedGenre === null ? true : false}
+          aria-current={selectedGenre === null}
           onClick={() => setSelectedGenre(null)}
         >
           All
         </button>
-        <button
-          className="secondary"
-          aria-current={selectedGenre === 'Pop' ? true : false}
-          onClick={() => setSelectedGenre('Pop')}
-        >
-          Pop
-        </button>
-        <button
-          className="secondary"
-          aria-current={selectedGenre === 'Classical' ? true : false}
-          onClick={() => setSelectedGenre('Classical')}
-        >
-          Classical
-        </button>
+        {GENRES.map((genre) => (
+          <button
+            key={genre}
+            className="secondary"
+            aria-current={selectedGenre === genre}
+            onClick={() => setSelectedGenre(genre)}
+          >
+            {genre}
+          </button>
+        ))}
       </div>
-      {loading ? (
+      {state.loading ? (
         <p>Loading songs...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
+      ) : state.error ? (
+        <p>Error: {state.error}</p>
       ) : searchQuery !== '' && filteredSongs.length === 0 ? (
         <p>No songs found matching "{searchQuery}"</p>
       ) : (
