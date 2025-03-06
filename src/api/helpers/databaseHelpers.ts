@@ -1,37 +1,94 @@
 import { supabase } from '..';
 import { Song, SongWithGenres } from '../../types';
 
-export async function insertSong(songData: { title: string; artist: string }) {
+// Utility function for error handling
+function handleError(error: unknown, message: string) {
+  console.error(message, error);
+  throw new Error(message);
+}
+
+export async function insertSong(songData: {
+  title: string;
+  artist: string;
+  genre: string; // Required genre parameter
+}): Promise<Song | null> {
+  // Check if the genre exists first
+  const genreId = await getGenreId(songData.genre);
+  if (!genreId) {
+    console.error(`Genre "${songData.genre}" not found. Song not inserted.`);
+    return null; // Exit if genre doesn't exist
+  }
+
+  // Insert the song
   const { data, error } = await supabase
     .from('Song')
-    .insert([songData])
+    .insert([{ title: songData.title, artist: songData.artist }])
     .select();
 
   if (error) {
-    console.error('Error inserting song:', error);
+    handleError(error, 'Error inserting song');
     return null;
   }
-  return data[0];
+
+  const newSong = data[0];
+
+  // Associate the song with the genre
+  const success = await associateSongWithGenres(newSong.song_id, [genreId]);
+  if (!success) {
+    console.error(`Failed to associate song with "${songData.genre}" genre`);
+    // We could delete the song here since genre association failed, but for now just warn
+  }
+
+  return newSong;
 }
 
-export async function insertGenre(name: string) {
+// Function to handle CSV upload of songs with a specific genre
+export async function uploadSongsFromCSV(
+  csvData: { title: string; artist: string }[],
+  genre: string
+): Promise<Song[]> {
+  const successfulSongs: Song[] = [];
+
+  for (const song of csvData) {
+    try {
+      const result = await insertSong({
+        title: song.title,
+        artist: song.artist,
+        genre,
+      });
+      if (result) {
+        successfulSongs.push(result);
+      }
+    } catch (error) {
+      console.error(
+        `Failed to insert song: ${song.title} - ${song.artist}`,
+        error
+      );
+      continue;
+    }
+  }
+
+  return successfulSongs;
+}
+
+export async function insertGenre(name: string): Promise<number | null> {
   const { data, error } = await supabase
     .from('Genre')
     .insert({ name })
     .select();
 
   if (error) {
-    console.error('Error inserting genre:', error);
+    handleError(error, 'Error inserting genre');
     return null;
   }
 
-  return data[0];
+  return data[0]?.id || null;
 }
 
 export async function associateSongWithGenres(
   songId: number,
   genreIds: number[]
-) {
+): Promise<boolean> {
   const associations = genreIds.map((genreId) => ({
     song_id: songId,
     genre_id: genreId,
@@ -40,7 +97,7 @@ export async function associateSongWithGenres(
   const { error } = await supabase.from('GenreSong').insert(associations);
 
   if (error) {
-    console.error('Error associating song with genres:', error);
+    handleError(error, 'Error associating song with genres');
     return false;
   }
   return true;
@@ -55,95 +112,29 @@ async function getGenreId(name: string): Promise<number | null> {
     .single();
 
   if (error) {
-    console.error('Error fetching genre:', error);
+    handleError(error, 'Error fetching genre');
     return null;
   }
 
   return data?.id || null;
 }
 
-// Function to get all songs
-async function getAllSongs(): Promise<Song[] | null> {
-  const { data, error } = await supabase.from('Song').select('*');
-
-  if (error) {
-    console.error('Error fetching songs:', error);
-    return null;
-  }
-
-  return data;
-}
-
-// Function to update all existing songs with Pop genre
-export async function updateSongsWithPopGenre() {
-  const popGenreId = await getGenreId('Pop');
-  if (!popGenreId) {
-    console.error('Pop genre not found');
-    return false;
-  }
-
-  const songs = await getAllSongs();
-  if (!songs) return false;
-
-  const results = await Promise.all(
-    songs.map((song) => associateSongWithGenres(song.song_id, [popGenreId]))
-  );
-
-  return results.every((result) => result === true);
-}
-
-// Function to insert new song with Classical genre
-export async function insertClassicalSong(songData: {
-  title: string;
-  artist: string;
-}) {
-  const classicalGenreId = await getGenreId('Classical');
-  if (!classicalGenreId) {
-    console.error('Classical genre not found');
-    return null;
-  }
-
-  const newSong = await insertSong(songData);
-  if (!newSong) return null;
-
-  const success = await associateSongWithGenres(newSong.song_id, [
-    classicalGenreId,
-  ]);
-  if (!success) {
-    console.error('Failed to associate song with Classical genre');
-    return null;
-  }
-
-  return newSong;
-}
-
-// Function to handle CSV upload of classical songs
-export async function uploadClassicalSongsFromCSV(
-  csvData: { title: string; artist: string }[]
-) {
-  const results = await Promise.all(
-    csvData.map((song) =>
-      insertClassicalSong({
-        title: song.title,
-        artist: song.artist,
-      })
-    )
-  );
-
-  return results.filter((result) => result !== null);
-}
-
 export async function getSongsByGenre(
   genreName: string | null
 ): Promise<SongWithGenres[]> {
-  let query = supabase.from('Song').select(`
+  let query = supabase
+    .from('Song')
+    .select(
+      `
         *,
         genres:GenreSong!inner(
           Genre!inner(
             name
           )
         )
-      `);
+      `
+    )
+    .order('artist');
 
   // If a genre is specified, add a filter condition
   if (genreName) {
@@ -152,7 +143,9 @@ export async function getSongsByGenre(
 
   const { data, error } = await query;
 
-  if (error) throw new Error(`Failed to fetch songs - ${error.message}`);
+  if (error) {
+    handleError(error, `Failed to fetch songs - ${error.message}`);
+  }
 
   return (data ?? []).map((song) => ({
     ...song,

@@ -1,4 +1,4 @@
-import type { Database } from './../types/database.types';
+import type { Database } from './database.types';
 
 export type Song = Database['public']['Tables']['Song']['Row'];
 export type Playlist = Database['public']['Tables']['Playlist']['Row'];

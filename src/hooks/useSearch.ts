@@ -29,7 +29,10 @@ export function useSearch(songs: SongWithGenres[], debounceDelay = 500) {
   }, [inputValue, debouncedSetParams]);
 
   const filteredSongs = useMemo(
-    () => songs.filter((song) => filterSongs(song, inputValue)),
+    () =>
+      songs
+        .filter((song) => filterSongs(song, inputValue))
+        .sort((a, b) => a.artist.localeCompare(b.artist)),
     [songs, inputValue]
   );
 
