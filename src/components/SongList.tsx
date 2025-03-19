@@ -18,7 +18,7 @@ export default function SongList({ songs }: { songs: SongWithGenres[] }) {
             {/* {playlistExists && <th scope="col"></th>} */}
             <th scope="col">Song Name</th>
             <th scope="col">Artist</th>
-            <th scope="col">Genre(s)</th>
+            {/* <th scope="col">Genre(s)</th> */}
           </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@ export default function SongList({ songs }: { songs: SongWithGenres[] }) {
                 )} */}
                 <th scope="row">{song.title}</th>
                 <td>{song.artist}</td>
-                <td>
+                {/* <td>
                   {song.genres.map((genre) => {
                     return (
                       <>
@@ -40,7 +40,7 @@ export default function SongList({ songs }: { songs: SongWithGenres[] }) {
                       </>
                     );
                   })}
-                </td>
+                </td> */}
               </tr>
             );
           })}
