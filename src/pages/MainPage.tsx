@@ -6,7 +6,7 @@ import { getSongsByGenre } from '../api/helpers/databaseHelpers';
 import { SongWithGenres } from '../types';
 // import { AppContext } from '../App';
 
-const GENRES = ['Pop', 'Classical'] as const;
+const GENRES = ['Pop', 'Classical', 'Film & TV', 'Christmas'] as const;
 
 export default function MainPage() {
   const [state, setState] = useState({
@@ -38,9 +38,16 @@ export default function MainPage() {
     <section>
       {}
       <SearchBox value={inputValue} onChange={setInputValue} />
-      <div role="group">
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '0.5rem',
+          marginBlockEnd: '1rem',
+        }}
+      >
         <button
-          className="secondary"
+          className=""
           aria-current={selectedGenre === null}
           onClick={() => setSelectedGenre(null)}
         >
@@ -49,7 +56,7 @@ export default function MainPage() {
         {GENRES.map((genre) => (
           <button
             key={genre}
-            className="secondary"
+            className=""
             aria-current={selectedGenre === genre}
             onClick={() => setSelectedGenre(genre)}
           >
