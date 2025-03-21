@@ -47,7 +47,7 @@ export default function MainPage() {
         }}
       >
         <button
-          className=""
+          className="outline"
           aria-current={selectedGenre === null}
           onClick={() => setSelectedGenre(null)}
         >
@@ -56,7 +56,7 @@ export default function MainPage() {
         {GENRES.map((genre) => (
           <button
             key={genre}
-            className=""
+            className="outline"
             aria-current={selectedGenre === genre}
             onClick={() => setSelectedGenre(genre)}
           >
