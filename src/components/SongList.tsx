@@ -1,15 +1,6 @@
 import { SongWithGenres } from './../types';
 
-// import { addSong } from '../api';
-
 export default function SongList({ songs }: { songs: SongWithGenres[] }) {
-  // function handleClick(songId: number) {
-  //   console.log(songId);
-  //   // addSong(songId);
-  // }
-
-  // const { playlistExists } = useOutletContext<AppContext>();
-
   return (
     <>
       <table id="table" className="striped">
@@ -25,22 +16,8 @@ export default function SongList({ songs }: { songs: SongWithGenres[] }) {
           {songs.map((song, i) => {
             return (
               <tr key={i}>
-                {/* {playlistExists && (
-                  <th scope="row">
-                    <button onClick={() => handleClick(song.id)}></button>
-                  </th>
-                )} */}
                 <th scope="row">{song.title}</th>
                 <td>{song.artist}</td>
-                {/* <td>
-                  {song.genres.map((genre) => {
-                    return (
-                      <>
-                        <span>{genre.name}</span>
-                      </>
-                    );
-                  })}
-                </td> */}
               </tr>
             );
           })}

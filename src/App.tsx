@@ -1,5 +1,9 @@
 import { NavLink, Outlet } from 'react-router';
 import featureFlags from './featureFlags.json';
+import { useEffect } from 'react';
+import '@fontsource-variable/space-grotesk';
+import logo from './../public/logo-white.svg';
+
 // import { SongWithGenres } from './types';
 // import { useSongsWithGenres } from './hooks/useSongsWithGenres';
 // import { checkPlaylistExists } from './api/playlist';
@@ -22,17 +26,23 @@ function App() {
   //   checkPlaylistExists(id).then((res) => setPlaylistExists(res));
   // }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }, []);
+
   return (
     <>
-      <header style={{ paddingBlock: '1rem' }}>
-        <hgroup>
-          <h1>Amba Strings</h1>
-          {featureFlags.hasPlaylist ? (
-            <p>Add songs to a playlist and share!</p>
-          ) : (
-            <p>Song List</p>
-          )}
-        </hgroup>
+      <header
+        style={{
+          paddingBlock: '1rem',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <a href="https://ambastrings.co.uk">
+          <img src={logo} alt="Amba Strings" width={120} height={120} />
+        </a>
+        {/* <h1>Repertoire</h1> */}
         {featureFlags.hasPlaylist && (
           <nav>
             <ul>
@@ -62,7 +72,11 @@ function App() {
         <nav>
           <ul>
             <li>
-              Follow <a href="http://instagram.com/ambastrings">@ambastrings</a>
+              Website: <a href="https://ambastrings.co.uk">ambastrings.co.uk</a>
+            </li>
+            <li>
+              Instagram:{' '}
+              <a href="http://instagram.com/ambastrings">@ambastrings</a>
             </li>
           </ul>
         </nav>
