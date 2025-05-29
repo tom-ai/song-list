@@ -13,6 +13,7 @@
     "add-sample-data": "vite-node src/utils/addSampleData.ts"
   },
   "dependencies": {
+    "@fontsource-variable/space-grotesk": "^5.2.7",
     "@neondatabase/serverless": "^0.10.4",
     "@supabase/supabase-js": "^2.47.12",
     "@types/lodash": "^4.17.13",
