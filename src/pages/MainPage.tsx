@@ -7,7 +7,11 @@ export default function MainPage() {
   const playlistSlug = searchParams.get('playlist');
 
   const handlePlaylistSelect = (slug: string) => {
-    setSearchParams({ playlist: slug });
+    if (slug === '') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ playlist: slug });
+    }
   };
 
   return (

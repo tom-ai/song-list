@@ -23,6 +23,16 @@ export default function PlaylistList({
         marginBlockEnd: '1rem',
       }}
     >
+      <button
+        className="outline"
+        onClick={(e) => {
+          e.preventDefault();
+          onSelect('');
+        }}
+        aria-current={selectedSlug === ''}
+      >
+        All Songs
+      </button>
       {playlists &&
         playlists.items.map((playlist) => (
           <button

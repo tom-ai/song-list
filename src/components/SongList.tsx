@@ -20,10 +20,18 @@ export default function SongList({ playlistSlug }: SongListProps) {
       </thead>
       <tbody>
         {songs &&
-          songs.items.map((song) => (
-            <tr key={song.id}>
-              <th scope="row">{song.title}</th>
-              <td scope="row">{song.artist}</td>
+          (songs.meta.total > 0 ? (
+            songs.items.map((song) => (
+              <tr key={song.id}>
+                <th scope="row">{song.title}</th>
+                <td scope="row">{song.artist}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={2} style={{ textAlign: 'center', padding: '1rem' }}>
+                No songs in this playlist
+              </td>
             </tr>
           ))}
       </tbody>
