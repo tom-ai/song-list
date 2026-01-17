@@ -1,2 +1,2 @@
 const tenantSlug = 'amba';
-export const baseUrl = process.env.BASE_API_URL + '/' + tenantSlug || '';
+export const baseUrl = `${import.meta.env.VITE_BASE_API_URL ?? ''}/${tenantSlug}`;
