@@ -10,12 +10,22 @@ export default function SearchBox({ debounceDelay = 300 }: SearchBoxProps) {
   const initialData = searchParams.get('q') ?? '';
   const [inputValue, setInputValue] = useState(initialData);
 
-  // Debounce the URL update
+  useEffect(() => {
+    const currentQuery = searchParams.get('q') ?? '';
+    if (inputValue !== currentQuery) {
+      setInputValue(currentQuery);
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setSearchParams((prev) => {
-        // preserve existing params like playlist
         const newParams = new URLSearchParams(prev);
+
+        if (inputValue && newParams.has('playlist')) {
+          newParams.delete('playlist');
+        }
+
         if (inputValue) {
           newParams.set('q', inputValue);
         } else {

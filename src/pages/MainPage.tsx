@@ -11,6 +11,9 @@ export default function MainPage() {
   const handlePlaylistSelect = (slug: string) => {
     setSearchParams((prev) => {
       const newParams = new URLSearchParams(prev);
+      if (newParams.has('q')) {
+        newParams.delete('q');
+      }
       if (slug === '') {
         newParams.delete('playlist');
       } else {
