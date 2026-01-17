@@ -1,11 +1,11 @@
-// import { Song } from '../types';
+import { PublicSong } from '../types';
 
-// export function filterSongs(song: Song, query: string) {
-//   const searchQ = query.toLowerCase().trim();
+export function filterSongs(song: PublicSong, query: string) {
+  const searchQ = query.toLowerCase().trim();
 
-//   const { title, artist } = song;
-//   return (
-//     title.toLowerCase().includes(searchQ) ||
-//     artist.toLowerCase().includes(searchQ)
-//   );
-// }
+  const { title, artist } = song;
+  return (
+    title.toLowerCase().includes(searchQ) ||
+    artist.toLowerCase().includes(searchQ)
+  );
+}
