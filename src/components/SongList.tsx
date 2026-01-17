@@ -6,10 +6,10 @@ type SongListProps = {
 };
 
 export default function SongList({ playlistSlug, searchQuery }: SongListProps) {
-  const { songs, isLoading, error } = useSongs(playlistSlug, searchQuery); // pass in slug
+  const { songs, isLoading, error } = useSongs(playlistSlug, searchQuery);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>{error.message}</p>; // could move up to parent?
+  if (isLoading) return <p>Loading songs...</p>;
+  if (error) return <p>{error.message}</p>;
 
   return (
     <table id="table" className="striped">

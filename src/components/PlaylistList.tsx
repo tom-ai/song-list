@@ -11,8 +11,8 @@ export default function PlaylistList({
 }: PlaylistListProps) {
   const { playlists, isLoading, error } = usePlaylists();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>{error.message}</p>; // could move up to parent?
+  if (isLoading) return <p>Loading playlists...</p>;
+  if (error) return <p>{error.message}</p>;
 
   return (
     <form
