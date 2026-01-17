@@ -2,20 +2,15 @@ import SongList from '../components/SongList';
 import SearchBox from '../components/SearchBox';
 import { useSearch } from '../hooks/useSearch';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import useSongs from '../hooks/useSongs';
 
 export default function MainPage() {
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-
-  useEffect(() => {}, [selectedGenre]);
-
-  //   const { inputValue, setInputValue, filteredSongs, searchQuery } = useSearch(
-  //     state.songs,
-  //   );
+  //   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
   return (
     <section>
-      {}
-      <SearchBox value={inputValue} onChange={setInputValue} />
+      {/* <SearchBox value={inputValue} onChange={setInputValue} /> */}
       <div
         style={{
           display: 'flex',
@@ -24,13 +19,13 @@ export default function MainPage() {
           marginBlockEnd: '1rem',
         }}
       >
-        <button
+        {/* <button
           className="outline"
           aria-current={selectedGenre === null}
           onClick={() => setSelectedGenre(null)}
         >
           All
-        </button>
+        </button> */}
 
         {/* {GENRES.map((genre) => (
           <button
@@ -43,15 +38,7 @@ export default function MainPage() {
           </button>
         ))} */}
       </div>
-      {state.loading ? (
-        <p>Loading songs...</p>
-      ) : state.error ? (
-        <p>Error: {state.error}</p>
-      ) : searchQuery !== '' && filteredSongs.length === 0 ? (
-        <p>No songs found matching "{searchQuery}"</p>
-      ) : (
-        <SongList songs={filteredSongs} />
-      )}
+      <SongList />
     </section>
   );
 }

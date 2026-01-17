@@ -1,27 +1,17 @@
-import { useEffect, useState } from 'react';
-import { Song } from './../types';
-import { getSongs } from '../api';
+import useSWR from 'swr';
+import { baseUrl } from '../api/helpers/constants';
+import { APIError, PublicSongList } from '../types';
 
 export default function useSongs() {
-  const [songs, setSongs] = useState<Song[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data,
+    isLoading,
+    error: swrError,
+  } = useSWR<PublicSongList, APIError>(`${baseUrl}/songs`);
 
-  useEffect(() => {
-    getSongs()
-      .then((data) => {
-        setSongs(data);
-      })
-      .catch((err) => {
-        console.warn(err);
-        setError(
-          err instanceof Error ? err.message : 'An unknown error occurred'
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  return { songs, loading, error };
+  return {
+    songs: data,
+    isLoading,
+    error: swrError?.error,
+  };
 }
