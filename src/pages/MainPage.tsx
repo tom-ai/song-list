@@ -2,37 +2,15 @@ import SongList from '../components/SongList';
 import SearchBox from '../components/SearchBox';
 import { useSearch } from '../hooks/useSearch';
 import { useEffect, useState } from 'react';
-import { getSongsByGenre } from '../api/helpers/databaseHelpers';
-import { SongWithGenres } from '../types';
-// import { AppContext } from '../App';
-
-const GENRES = ['Pop', 'Classical', 'Film & TV', 'Christmas'] as const;
 
 export default function MainPage() {
-  const [state, setState] = useState({
-    songs: [] as SongWithGenres[],
-    loading: true,
-    error: null as string | null,
-  });
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
-  useEffect(() => {
-    setState((prev) => ({ ...prev, loading: true }));
-    getSongsByGenre(selectedGenre)
-      .then((songs) => setState({ songs, loading: false, error: null }))
-      .catch((err) =>
-        setState({
-          songs: [],
-          loading: false,
-          error:
-            err instanceof Error ? err.message : 'An unknown error occurred',
-        })
-      );
-  }, [selectedGenre]);
+  useEffect(() => {}, [selectedGenre]);
 
-  const { inputValue, setInputValue, filteredSongs, searchQuery } = useSearch(
-    state.songs
-  );
+  //   const { inputValue, setInputValue, filteredSongs, searchQuery } = useSearch(
+  //     state.songs,
+  //   );
 
   return (
     <section>
@@ -53,7 +31,8 @@ export default function MainPage() {
         >
           All
         </button>
-        {GENRES.map((genre) => (
+
+        {/* {GENRES.map((genre) => (
           <button
             key={genre}
             className="outline"
@@ -62,7 +41,7 @@ export default function MainPage() {
           >
             {genre}
           </button>
-        ))}
+        ))} */}
       </div>
       {state.loading ? (
         <p>Loading songs...</p>
