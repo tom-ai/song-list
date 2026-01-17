@@ -1,7 +1,7 @@
 import useSongs from '../hooks/useSongs';
 
 export default function SongList() {
-  const { songs, isLoading, error } = useSongs();
+  const { songs, isLoading, error } = useSongs(); // pass in slug
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>; // could move up to parent?

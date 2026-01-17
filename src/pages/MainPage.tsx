@@ -4,40 +4,23 @@ import { useSearch } from '../hooks/useSearch';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import useSongs from '../hooks/useSongs';
+import PlaylistList from '../components/PlaylistList';
 
 export default function MainPage() {
   //   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
 
+  // update songlist to pass in playlist slug
+
+  // handle
+  // prevent default
+  // set state of selected
+  // re fetch songs by playlist
+  
   return (
     <section>
       {/* <SearchBox value={inputValue} onChange={setInputValue} /> */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
-          marginBlockEnd: '1rem',
-        }}
-      >
-        {/* <button
-          className="outline"
-          aria-current={selectedGenre === null}
-          onClick={() => setSelectedGenre(null)}
-        >
-          All
-        </button> */}
 
-        {/* {GENRES.map((genre) => (
-          <button
-            key={genre}
-            className="outline"
-            aria-current={selectedGenre === genre}
-            onClick={() => setSelectedGenre(genre)}
-          >
-            {genre}
-          </button>
-        ))} */}
-      </div>
+      <PlaylistList />
 
       <SongList />
     </section>
