@@ -2,10 +2,11 @@ import useSongs from '../hooks/useSongs';
 
 type SongListProps = {
   playlistSlug?: string | null;
+  searchQuery?: string | null;
 };
 
-export default function SongList({ playlistSlug }: SongListProps) {
-  const { songs, isLoading, error } = useSongs(playlistSlug); // pass in slug
+export default function SongList({ playlistSlug, searchQuery }: SongListProps) {
+  const { songs, isLoading, error } = useSongs(playlistSlug, searchQuery); // pass in slug
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>; // could move up to parent?

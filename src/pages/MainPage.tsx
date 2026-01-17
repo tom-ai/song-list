@@ -1,27 +1,33 @@
 import SongList from '../components/SongList';
 import PlaylistList from '../components/PlaylistList';
 import { useSearchParams } from 'react-router';
+import SearchBox from '../components/SearchBox';
 
 export default function MainPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const playlistSlug = searchParams.get('playlist');
+  const searchQuery = searchParams.get('q');
 
   const handlePlaylistSelect = (slug: string) => {
-    if (slug === '') {
-      setSearchParams({});
-    } else {
-      setSearchParams({ playlist: slug });
-    }
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      if (slug === '') {
+        newParams.delete('playlist');
+      } else {
+        newParams.set('playlist', slug);
+      }
+      return newParams;
+    });
   };
 
   return (
     <section>
-      {/* <SearchBox value={inputValue} onChange={setInputValue} /> */}
+      <SearchBox />
       <PlaylistList
         selectedSlug={playlistSlug}
         onSelect={handlePlaylistSelect}
       />
-      <SongList playlistSlug={playlistSlug} />
+      <SongList playlistSlug={playlistSlug} searchQuery={searchQuery} />
     </section>
   );
 }

@@ -3,10 +3,17 @@ import { baseUrl } from '../api/helpers/constants';
 import { APIError, PublicSongList } from '../types';
 import { fetcher } from '../api/helpers/fetcher';
 
-export default function useSongs(playlistSlug?: string | null) {
-  const url = playlistSlug
+export default function useSongs(
+  playlistSlug?: string | null,
+  searchQuery?: string | null,
+) {
+  let url = playlistSlug
     ? `${baseUrl}/playlists/${playlistSlug}/songs`
     : `${baseUrl}/songs`;
+
+  if (searchQuery) {
+    url += `?q=${searchQuery}`;
+  }
 
   const {
     data,
