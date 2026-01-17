@@ -1,12 +1,19 @@
 import usePlaylists from '../hooks/usePlaylists';
 
-export default function PlaylistList() {
+type PlaylistListProps = {
+  selectedSlug?: string | null;
+  onSelect: (slug: string) => void;
+};
+
+export default function PlaylistList({
+  selectedSlug,
+  onSelect,
+}: PlaylistListProps) {
   const { playlists, isLoading, error } = usePlaylists();
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>; // could move up to parent?
 
-  // aria current and selected value state
   return (
     <form
       style={{
@@ -18,7 +25,15 @@ export default function PlaylistList() {
     >
       {playlists &&
         playlists.items.map((playlist) => (
-          <button key={playlist.id} className="outline">
+          <button
+            key={playlist.id}
+            className="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              onSelect(playlist.slug);
+            }}
+            aria-current={selectedSlug === playlist.slug ? 'true' : undefined}
+          >
             {playlist.name}
           </button>
         ))}

@@ -3,12 +3,16 @@ import { baseUrl } from '../api/helpers/constants';
 import { APIError, PublicSongList } from '../types';
 import { fetcher } from '../api/helpers/fetcher';
 
-export default function useSongs() {
+export default function useSongs(playlistSlug?: string | null) {
+  const url = playlistSlug
+    ? `${baseUrl}/playlists/${playlistSlug}/songs`
+    : `${baseUrl}/songs`;
+
   const {
     data,
     isLoading,
     error: swrError,
-  } = useSWR<PublicSongList, APIError>(`${baseUrl}/songs`, fetcher);
+  } = useSWR<PublicSongList, APIError>(url, fetcher);
 
   return {
     songs: data,

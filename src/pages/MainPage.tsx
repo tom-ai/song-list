@@ -1,28 +1,23 @@
 import SongList from '../components/SongList';
-import SearchBox from '../components/SearchBox';
-import { useSearch } from '../hooks/useSearch';
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import useSongs from '../hooks/useSongs';
 import PlaylistList from '../components/PlaylistList';
+import { useSearchParams } from 'react-router';
 
 export default function MainPage() {
-  //   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const playlistSlug = searchParams.get('playlist');
 
-  // update songlist to pass in playlist slug
+  const handlePlaylistSelect = (slug: string) => {
+    setSearchParams({ playlist: slug });
+  };
 
-  // handle
-  // prevent default
-  // set state of selected
-  // re fetch songs by playlist
-  
   return (
     <section>
       {/* <SearchBox value={inputValue} onChange={setInputValue} /> */}
-
-      <PlaylistList />
-
-      <SongList />
+      <PlaylistList
+        selectedSlug={playlistSlug}
+        onSelect={handlePlaylistSelect}
+      />
+      <SongList playlistSlug={playlistSlug} />
     </section>
   );
 }
