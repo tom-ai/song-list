@@ -31,7 +31,9 @@ export default function SongList({ playlistSlug, searchQuery }: SongListProps) {
           ) : (
             <tr>
               <td colSpan={2} style={{ textAlign: 'center', padding: '1rem' }}>
-                No songs in this playlist
+                {playlistSlug && !searchQuery
+                  ? 'No songs in this playlist'
+                  : `No results found for "${searchQuery}"`}
               </td>
             </tr>
           ))}
