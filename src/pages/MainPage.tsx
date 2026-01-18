@@ -47,7 +47,12 @@ export default function MainPage() {
 
   return (
     <>
-      <form className="sticky-controls">
+      <form
+        className="sticky-controls"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <SearchBox />
         <PlaylistList
           selectedSlug={playlistSlug}

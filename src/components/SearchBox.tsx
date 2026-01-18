@@ -46,6 +46,12 @@ export default function SearchBox({ debounceDelay = 300 }: SearchBoxProps) {
       aria-label="Search"
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          e.currentTarget.blur();
+        }
+      }}
     />
   );
 }
