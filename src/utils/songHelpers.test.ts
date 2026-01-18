@@ -1,32 +1,29 @@
 import { expect, test, describe } from 'vitest';
 import { filterSongs } from './songHelpers';
-import { Song } from '../types';
+import { PublicSong } from '../types';
 
 describe('Filter Songs', () => {
-  const testSongs: Song[] = [
+  const testSongs: PublicSong[] = [
     {
       title: 'Bohemian Rhapsody',
       artist: 'Queen',
-      created_at: '2025-01-09T15:00:00Z',
-      song_id: 1,
+      id: 's1',
     },
     {
       title: 'Stairway to Heaven',
       artist: 'Led Zeppelin',
-      created_at: '2025-01-09T15:00:00Z',
-      song_id: 2,
+      id: 's2',
     },
     {
       title: 'Hotel California',
       artist: 'Eagles',
-      created_at: '2025-01-09T15:00:00Z',
-      song_id: 3,
+      id: 's3',
     },
   ];
 
   test('filters by full song name', () => {
     const result = testSongs.filter((song) =>
-      filterSongs(song, 'Bohemian Rhapsody')
+      filterSongs(song, 'Bohemian Rhapsody'),
     );
     expect(result).toHaveLength(1);
     expect(result[0].title).toBe('Bohemian Rhapsody');

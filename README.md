@@ -2,7 +2,7 @@
 
 Currently live for Amba Strings at http://songs.ambastrings.co.uk
 
-A dynamic song list and playlist generator. Add songs to a playlist and easily share it with a link. Made with Vite.
+Future Plan: A dynamic song list and playlist generator. Add songs to a playlist and easily share it with a link.
 
 Clone project, add environment variables to a `.env` file and run `run npm dev`.
 

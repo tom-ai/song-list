@@ -1,0 +1,27 @@
+.sticky-controls {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-block: 0.75rem;
+  background: var(--pico-background-color);
+  border-bottom: 1px solid var(--muted-border-color);
+}
+
+/* spacing so you can remove inline style */
+.sticky-controls input[type='search'] {
+  margin: 0 0 0.75rem 0;
+}
+
+.playlist-chips {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* optional: nicer feel */
+.playlist-chips button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}

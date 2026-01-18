@@ -1,6 +1,6 @@
-import { Song } from '../types';
+import { PublicSong } from '../types';
 
-export function filterSongs(song: Song, query: string) {
+export function filterSongs(song: PublicSong, query: string) {
   const searchQ = query.toLowerCase().trim();
 
   const { title, artist } = song;

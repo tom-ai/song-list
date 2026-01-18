@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
-import { Song } from './../types';
-import { getSongs } from '../api';
+import useSWR from 'swr';
+import { baseUrl } from '../api/helpers/constants';
+import { APIError, PublicSongList } from '../types';
+import { fetcher } from '../api/helpers/fetcher';
 
-export default function useSongs() {
-  const [songs, setSongs] = useState<Song[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function useSongs(
+  playlistSlug?: string | null,
+  searchQuery?: string | null,
+) {
+  let url = playlistSlug
+    ? `${baseUrl}/playlists/${playlistSlug}/songs`
+    : `${baseUrl}/songs`;
 
-  useEffect(() => {
-    getSongs()
-      .then((data) => {
-        setSongs(data);
-      })
-      .catch((err) => {
-        console.warn(err);
-        setError(
-          err instanceof Error ? err.message : 'An unknown error occurred'
-        );
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  if (searchQuery) {
+    url += `?q=${searchQuery}`;
+  }
 
-  return { songs, loading, error };
+  const {
+    data,
+    isLoading,
+    error: swrError,
+  } = useSWR<PublicSongList, APIError>(url, fetcher);
+
+  return {
+    songs: data,
+    isLoading,
+    error: swrError?.error,
+  };
 }
