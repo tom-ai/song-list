@@ -46,13 +46,15 @@ export default function MainPage() {
   };
 
   return (
-    <section>
-      <SearchBox />
-      <PlaylistList
-        selectedSlug={playlistSlug}
-        onSelect={handlePlaylistSelect}
-      />
+    <>
+      <form className="sticky-controls">
+        <SearchBox />
+        <PlaylistList
+          selectedSlug={playlistSlug}
+          onSelect={handlePlaylistSelect}
+        />
+      </form>
       <SongList playlistSlug={playlistSlug} searchQuery={searchQuery} />
-    </section>
+    </>
   );
 }

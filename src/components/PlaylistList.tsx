@@ -15,21 +15,14 @@ export default function PlaylistList({
   if (error) return <p>{error.message}</p>;
 
   return (
-    <form
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '0.5rem',
-        marginBlockEnd: '1rem',
-      }}
-    >
+    <div className="playlist-chips">
       <button
         className="outline"
         onClick={(e) => {
           e.preventDefault();
           onSelect('');
         }}
-        aria-current={selectedSlug === ''}
+        aria-current={!selectedSlug}
       >
         All Songs
       </button>
@@ -44,9 +37,9 @@ export default function PlaylistList({
             }}
             aria-current={selectedSlug === playlist.slug ? 'true' : undefined}
           >
-            {playlist.name}
+            {`${playlist.name} (${playlist.totalSongs})`}
           </button>
         ))}
-    </form>
+    </div>
   );
 }

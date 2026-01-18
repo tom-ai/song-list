@@ -12,7 +12,7 @@ export default function SongList({ playlistSlug, searchQuery }: SongListProps) {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <table id="table" className="striped">
+    <table aria-live="polite" id="table" className="striped">
       <thead>
         <tr>
           <th scope="col">Song Name</th>
