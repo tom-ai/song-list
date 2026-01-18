@@ -10,21 +10,18 @@ function App() {
 
   return (
     <>
-      <header
-        style={{
-          paddingBlock: '1rem',
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
+      <header className="container header">
+        <a href="/">
+          <h1>Repertoire List</h1>
+        </a>
         <a href="https://ambastrings.co.uk">
-          <img src={logo} alt="Amba Strings" width={120} height={120} />
+          <img src={logo} alt="Amba Strings" width={100} height={100} />
         </a>
       </header>
-      <main>
+      <main className="container">
         <Outlet />
       </main>
-      <footer>
+      <footer className="container">
         <nav>
           <ul>
             <li>

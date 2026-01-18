@@ -42,7 +42,7 @@ export default function SearchBox({ debounceDelay = 300 }: SearchBoxProps) {
     <input
       type="search"
       name="search"
-      placeholder="Search repertoire"
+      placeholder="Search for a song or artist"
       aria-label="Search"
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
