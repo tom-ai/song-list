@@ -11,11 +11,13 @@ function App() {
   return (
     <>
       <header className="container header">
+        <div>
+          <a href="https://ambastrings.co.uk">
+            <img src={logo} alt="Amba Strings" width={100} height={100} />
+          </a>
+        </div>
         <a href="/">
-          <h1>Repertoire List</h1>
-        </a>
-        <a href="https://ambastrings.co.uk">
-          <img src={logo} alt="Amba Strings" width={100} height={100} />
+          <h1>Repertoire</h1>
         </a>
       </header>
       <main className="container">
