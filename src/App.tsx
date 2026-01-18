@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import { useEffect } from 'react';
 import '@fontsource-variable/space-grotesk';
-import logo from './../public/logo-white.svg';
+import logo from './../public/amba-strings-logo-on-dark.svg';
 
 function App() {
   useEffect(() => {
