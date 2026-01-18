@@ -10,31 +10,45 @@ function App() {
 
   return (
     <>
-      <header className="container header">
-        <div>
+      <header className="header">
+        <a href="/">
+          <h1>Amba Strings Repertoire</h1>
+        </a>
+        {/* <div>
           <a href="https://ambastrings.co.uk">
             <img src={logo} alt="Amba Strings" width={100} height={100} />
           </a>
-        </div>
-        <a href="/">
-          <h1>Repertoire</h1>
-        </a>
+        </div> */}
       </header>
-      <main className="container">
+
+      <main>
         <Outlet />
       </main>
-      <footer className="container">
-        <nav>
-          <ul>
-            <li>
-              Website: <a href="https://ambastrings.co.uk">ambastrings.co.uk</a>
-            </li>
-            <li>
-              Instagram:{' '}
-              <a href="http://instagram.com/ambastrings">@ambastrings</a>
-            </li>
-          </ul>
-        </nav>
+      <footer className="footer">
+        <aside className="grid">
+          <div className="footer-logo">
+            <a href="https://ambastrings.co.uk">
+              <img src={logo} alt="Amba Strings" width={100} height={100} />
+            </a>
+          </div>
+          <nav>
+            <ul>
+              <li>
+                Website:{' '}
+                <a href="https://ambastrings.co.uk">ambastrings.co.uk</a>
+              </li>
+              <li>
+                Instagram:{' '}
+                <a href="https://instagram.com/ambastrings">@ambastrings</a>
+              </li>
+              <li>
+                <a target="_blank" href="https://app.groovetech.co.uk/admin">
+                  Login
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
       </footer>
     </>
   );

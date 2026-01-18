@@ -3,12 +3,15 @@
   src: url('./assets/fonts/BebasNeue-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: block; /* 'block' prevents the flicker/swap */
+  font-display: block;
 }
 
 :root {
   --font-family-heading: 'BebasNeue', sans-serif;
-  /* --pico-font-size: 40px; */
+}
+
+body > main {
+  padding-block: unset;
 }
 
 .sticky-controls {
@@ -26,14 +29,6 @@
   flex-wrap: wrap;
 }
 
-/* optional: nicer feel on mobile? */
-/* .playlist-chips {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  flex-wrap: nowrap;
-  padding-bottom: var(--pico-spacing);
-} */
-
 .playlist-chips button {
   flex: 0 0 auto;
   white-space: nowrap;
@@ -49,11 +44,10 @@
 
 .header h1 {
   font-family: var(--font-family-heading);
-  --pico-font-size: 2.75rem;
+  --pico-font-size: 2.25rem;
   color: var(--pico-primary);
   margin-bottom: 0;
   transition: color var(--pico-transition);
-  text-align: center;
 }
 
 .header a {
@@ -62,4 +56,10 @@
 
 .header h1:hover {
   color: var(--pico-primary-hover);
+}
+
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
