@@ -12,7 +12,9 @@ function App() {
     <>
       <header className="header">
         <a href="/">
-          <h1>Amba Strings Repertoire</h1>
+          <h1 className="mt">
+            <strong>Amba Strings</strong> Repertoire
+          </h1>
         </a>
         {/* <div>
           <a href="https://ambastrings.co.uk">

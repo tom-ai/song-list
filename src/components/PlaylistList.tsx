@@ -24,7 +24,7 @@ export default function PlaylistList({
         }}
         aria-current={!selectedSlug}
       >
-        All Songs
+        All
       </button>
       {playlists &&
         playlists.items.map((playlist) => (
