@@ -1,15 +1,14 @@
 import SongList from '../components/SongList';
-import PlaylistList from '../components/PlaylistList';
+import TagList from '../components/TagList';
 import { useSearchParams } from 'react-router';
 import SearchBox from '../components/SearchBox';
 import { useEffect } from 'react';
-import usePlaylists from '../hooks/usePlaylists';
+
 
 export default function MainPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const playlistSlug = searchParams.get('playlist');
+  const tag = searchParams.get('tag');
   const searchQuery = searchParams.get('q');
-  const { playlists } = usePlaylists();
 
   useEffect(() => {
     const baseTitle = 'Repertoire | Amba Strings';
@@ -17,29 +16,23 @@ export default function MainPage() {
 
     if (searchQuery) {
       newTitle = `Searching for "${searchQuery}" | Amba Strings`;
-    } else if (playlistSlug) {
-      const currentPlaylist = playlists?.items.find(
-        (p) => p.slug === playlistSlug,
-      );
-
-      if (currentPlaylist) {
-        newTitle = `${currentPlaylist.name} | Amba Strings`;
-      }
+    } else if (tag) {
+      newTitle = `${tag} | Amba Strings`;
     }
 
     document.title = newTitle;
-  }, [searchQuery, playlistSlug, playlists]);
+  }, [searchQuery, tag]);
 
-  const handlePlaylistSelect = (slug: string) => {
+  const handleTagSelect = (selected: string) => {
     setSearchParams((prev) => {
       const newParams = new URLSearchParams(prev);
       if (newParams.has('q')) {
         newParams.delete('q');
       }
-      if (slug === '') {
-        newParams.delete('playlist');
+      if (selected === '') {
+        newParams.delete('tag');
       } else {
-        newParams.set('playlist', slug);
+        newParams.set('tag', selected);
       }
       return newParams;
     });
@@ -54,12 +47,9 @@ export default function MainPage() {
         }}
       >
         <SearchBox />
-        <PlaylistList
-          selectedSlug={playlistSlug}
-          onSelect={handlePlaylistSelect}
-        />
+        <TagList selectedTag={tag} onSelect={handleTagSelect} />
       </form>
-      <SongList playlistSlug={playlistSlug} searchQuery={searchQuery} />
+      <SongList tag={tag} searchQuery={searchQuery} />
     </>
   );
 }

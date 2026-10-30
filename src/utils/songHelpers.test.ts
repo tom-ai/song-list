@@ -8,16 +8,19 @@ describe('Filter Songs', () => {
       title: 'Bohemian Rhapsody',
       artist: 'Queen',
       id: 's1',
+      tags: [],
     },
     {
       title: 'Stairway to Heaven',
       artist: 'Led Zeppelin',
       id: 's2',
+      tags: [],
     },
     {
       title: 'Hotel California',
       artist: 'Eagles',
       id: 's3',
+      tags: [],
     },
   ];
 
