@@ -22,8 +22,8 @@ export default function SearchBox({ debounceDelay = 300 }: SearchBoxProps) {
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev);
 
-        if (inputValue && newParams.has('playlist')) {
-          newParams.delete('playlist');
+        if (inputValue && newParams.has('tag')) {
+          newParams.delete('tag');
         }
 
         if (inputValue) {

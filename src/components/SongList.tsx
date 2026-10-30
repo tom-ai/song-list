@@ -1,12 +1,12 @@
 import useSongs from '../hooks/useSongs';
 
 type SongListProps = {
-  playlistSlug?: string | null;
+  tag?: string | null;
   searchQuery?: string | null;
 };
 
-export default function SongList({ playlistSlug, searchQuery }: SongListProps) {
-  const { songs, isLoading, error } = useSongs(playlistSlug, searchQuery);
+export default function SongList({ tag, searchQuery }: SongListProps) {
+  const { songs, isLoading, error } = useSongs(tag, searchQuery);
 
   if (isLoading) return <p>Loading songs...</p>;
   if (error) return <p>{error.message}</p>;
@@ -31,8 +31,8 @@ export default function SongList({ playlistSlug, searchQuery }: SongListProps) {
           ) : (
             <tr>
               <td colSpan={2} style={{ textAlign: 'center', padding: '1rem' }}>
-                {playlistSlug && !searchQuery
-                  ? 'No songs in this playlist'
+                {tag && !searchQuery
+                  ? 'No songs with this tag'
                   : `No results found for "${searchQuery}"`}
               </td>
             </tr>

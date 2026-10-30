@@ -4,13 +4,12 @@ export type PublicSong = {
   id: string;
   title: string;
   artist: string;
+  tags: string[];
 };
 
-export type PublicPlaylist = {
-  id: string;
-  name: string;
-  slug: string;
-  totalSongs: number;
+export type PublicTag = {
+  tag: string;
+  count: number;
 };
 
 export type ListMeta = {
@@ -25,13 +24,13 @@ export type PaginatedResponse<T> = {
 };
 
 export type PublicSongList = PaginatedResponse<PublicSong>;
-export type PublicPlaylistList = PaginatedResponse<PublicPlaylist>;
+export type PublicTagList = PaginatedResponse<PublicTag>;
 
 /////
 
 export type APIError = {
   error: {
-    code: 'NO_TENANT' | 'TENANT_NOT_FOUND' | 'PLAYLIST_NOT_FOUND' | 'INTERNAL';
+    code: 'NO_TENANT' | 'TENANT_NOT_FOUND' | 'INTERNAL';
     message: string;
   };
 };

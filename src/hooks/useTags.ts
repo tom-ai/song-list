@@ -1,17 +1,17 @@
 import useSWR from 'swr';
 import { baseUrl } from '../api/helpers/constants';
-import { APIError, PublicPlaylistList } from '../types';
+import { APIError, PublicTagList } from '../types';
 import { fetcher } from '../api/helpers/fetcher';
 
-export default function usePlaylists() {
+export default function useTags() {
   const {
     data,
     isLoading,
     error: swrError,
-  } = useSWR<PublicPlaylistList, APIError>(`${baseUrl}/playlists`, fetcher);
+  } = useSWR<PublicTagList, APIError>(`${baseUrl}/tags`, fetcher);
 
   return {
-    playlists: data,
+    tags: data,
     isLoading,
     error: swrError?.error,
   };
